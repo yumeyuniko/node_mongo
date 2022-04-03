@@ -24,4 +24,22 @@ app.post('/food', async (req, res) => {
   }
 });
 
+app.patch('/food/:id', async (req, res) => {
+  try {
+    await foodModel.findByIdAndUpdate(req.params.id, req.body);
+    await foodModel.save();
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.delete('/food/:id', async (req, res) => {
+  try {
+    const food = await foodModel.findByIdAndDelete(req.params.id);
+    res.send(food);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 module.exports = app;
